@@ -31,3 +31,13 @@ What is the most popular trip?
 What are the counts of each user type?
 What are the counts of gender?
 What are the earliest (i.e. oldest person), most recent (i.e. youngest person), and most popular birth years?
+
+Future scopes
+In the future, more functions that compute statistics will be added to answer more questions about the data. The possibilities of improving the interactive experience (e.g turning this script into a web app) will also be explored.
+
+Resources referred to complete this project
+Use parse_dates to recognize datetime columns:
+
+https://stackoverflow.com/questions/21269399/datetime-dtypes-in-pandas-read-csv
+https://stackoverflow.com/questions/17465045/can-pandas-automatically-recognize-dates
+https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html
