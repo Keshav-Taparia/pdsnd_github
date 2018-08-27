@@ -8,14 +8,13 @@ import time
 #new_york_city = 'new_york_city.csv'
 #washington = 'washington.csv'
 
-
-def getCity():
-    '''Asks the user for a city and returns the filename for that city's bike share data.
+'''Asks the user for a city and returns the filename for that city's bike share data.
     Args:
         none.
     Returns:
         (str) Filename for a city's bikeshare data.
-    '''
+'''
+def getCity():
     city = ''
     while city.lower() not in ['chicago', 'new york', 'washington']:
         city = input('\nHello! Let\'s explore some US bikeshare data!\n'
@@ -31,13 +30,13 @@ def getCity():
             print('Sorry, I do not understand your input. Please input either '
                   'Chicago, New York, or Washington.')
 
-def getTimePeriod():
-    '''Asks the user for a time period and returns the specified filter.
+'''Asks the user for a time period and returns the specified filter.
     Args:
         none.
     Returns:
         (str) Time filter for the bikeshare data.
-    '''
+'''
+def getTimePeriod():
     time_period = ''
     while time_period.lower() not in ['month', 'day', 'none']:
         time_period = input('\nWould you like to filter the data by month, day,'
@@ -46,13 +45,13 @@ def getTimePeriod():
             print('Sorry, I do not understand your input.')
     return time_period
 
-def getMonth():
-    '''Asks the user for a month and returns the specified month.
+'''Asks the user for a month and returns the specified month.
     Args:
         none.
     Returns:
         (tuple) Lower limit, upper limit of month for the bikeshare data.
-    '''
+'''
+def getMonth():
     month_input = ''
     months_dict = {'january': 1, 'february': 2, 'march': 3, 'april': 4,
                    'may': 5, 'june': 6}
@@ -65,13 +64,13 @@ def getMonth():
     month = months_dict[month_input.lower()]
     return ('2017-{}'.format(month), '2017-{}'.format(month + 1))
 
-def getDay():
-    '''Asks the user for a day and returns the specified day.
+'''Asks the user for a day and returns the specified day.
     Args:
         none.
     Returns:
         (tuple) Lower limit, upper limit of date for the bikeshare data.
-    '''
+'''
+def getDay():
     this_month = getMonth()[0]
     month = int(this_month[5:])
     valid_date = False
@@ -94,38 +93,38 @@ def getDay():
     end_date = start_date + timedelta(days=1)
     return (str(start_date), str(end_date))
 
-def popularMonth(df):
-    '''Finds and prints the most popular month for start time.
+'''Finds and prints the most popular month for start time.
     Args:
         bikeshare dataframe
     Returns:
         none
-    '''
+'''
+def popularMonth(df):
     months = ['January', 'February', 'March', 'April', 'May', 'June']
     index = int(df['start_time'].dt.month.mode())
     most_pop_month = months[index - 1]
     print('The most popular month is {}.'.format(most_pop_month))
 
-def popularDay(df):
-    '''Finds and prints the most popular day of week (Monday, Tuesday, etc.) for start time.
+'''Finds and prints the most popular day of week (Monday, Tuesday, etc.) for start time.
     Args:
         bikeshare dataframe
     Returns:
         none
-    '''
+'''
+def popularDay(df):
     days_of_week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
                     'Saturday', 'Sunday']
     index = int(df['start_time'].dt.dayofweek.mode())
     most_pop_day = days_of_week[index]
     print('The most popular day of week for start time is {}.'.format(most_pop_day))
 
-def popularHour(df):
-    '''Finds and prints the most popular hour of day for start time.
+'''Finds and prints the most popular hour of day for start time.
     Args:
         bikeshare dataframe
     Returns:
         none
-    '''
+'''
+def popularHour(df):
     most_pop_hour = int(df['start_time'].dt.hour.mode())
     if most_pop_hour == 0:
         am_pm = 'am'
@@ -138,14 +137,14 @@ def popularHour(df):
         pop_hour_readable = most_pop_hour - 12
     print('The most popular hour of day for start time is {}{}.'.format(pop_hour_readable, am_pm))
 
-def tripDuration(df):
-    '''Finds and prints the total trip duration and average trip duration in
+'''Finds and prints the total trip duration and average trip duration in
        hours, minutes, and seconds.
     Args:
         bikeshare dataframe
     Returns:
         none
-    '''
+'''
+def tripDuration(df):
     total_duration = df['tripDuration'].sum()
     minute, second = divmod(total_duration, 60)
     hour, minute = divmod(minute, 60)
@@ -160,74 +159,74 @@ def tripDuration(df):
     else:
         print('The average trip duration is {} minutes and {} seconds.'.format(m, s))
 
-def popularStations(df):
-    '''Finds and prints the most popular start station and most popular end station.
+'''Finds and prints the most popular start station and most popular end station.
     Args:
         bikeshare dataframe
     Returns:
         none
-    '''
+'''
+def popularStations(df):
     pop_start = df['start_station'].mode().to_string(index = False)
     pop_end = df['end_station'].mode().to_string(index = False)
     print('The most popular start station is {}.'.format(pop_start))
     print('The most popular end station is {}.'.format(pop_end))
 
-def popularTrip(df):
-    '''Finds and prints the most popular trip.
+'''Finds and prints the most popular trip.
     Args:
         bikeshare dataframe
     Returns:
         none
-    '''
+'''
+def popularTrip(df):
     most_pop_trip = df['journey'].mode().to_string(index = False)
     # The 'journey' column is created in the statistics() function.
     print('The most popular trip is {}.'.format(most_pop_trip))
 
-def users(df):
-    '''Finds and prints the counts of each user type.
+'''Finds and prints the counts of each user type.
     Args:
         bikeshare dataframe
     Returns:
         none
-    '''
+'''
+def users(df):
     subs = df.query('user_type == "Subscriber"').user_type.count()
     cust = df.query('user_type == "Customer"').user_type.count()
     print('There are {} Subscribers and {} Customers.'.format(subs, cust))
 
-def gender(df):
-    '''Finds and prints the counts of gender.
+'''Finds and prints the counts of gender.
     Args:
         bikeshare dataframe
     Returns:
         none
-    '''
+'''
+def gender(df):
     male_count = df.query('gender == "Male"').gender.count()
     female_count = df.query('gender == "Male"').gender.count()
     print('There are {} male users and {} female users.'.format(male_count, female_count))
 
-def birthYears(df):
-    ''' Finds and prints the earliest (i.e. oldest user), most recent (i.e. 
+''' Finds and prints the earliest (i.e. oldest user), most recent (i.e. 
         youngest user), and most popular birth years.
     Args:
         bikeshare dataframe
     Returns:
         none
-    '''
+'''
+def birthYears(df):
     earliest = int(df['birth_year'].min())
     latest = int(df['birth_year'].max())
     mode = int(df['birth_year'].mode())
     print('The oldest users are born in {}.\nThe youngest users are born in {}.'
           '\nThe most popular birth year is {}.'.format(earliest, latest, mode))
 
-def displayData(df):
-    '''Displays five lines of data if the user specifies that they would like to.
+'''Displays five lines of data if the user specifies that they would like to.
     After displaying five lines, ask the user if they would like to see five more,
     continuing asking until they say stop.
     Args:
         data frame
     Returns:
         none
-    '''
+'''
+def displayData(df):
     def isValid(display):
         if display.lower() in ['yes', 'no']:
             return True
@@ -268,14 +267,14 @@ def displayData(df):
                 break
 
 
-def statistics():
-    '''Calculates and prints out the descriptive statistics about a city and
+'''Calculates and prints out the descriptive statistics about a city and
     time period specified by the user via raw input.
     Args:
         none.
     Returns:
         none.
-    '''
+'''
+def statistics():
     # Filter by city (Chicago, New York, Washington)
     city = getCity()
     print('Loading data...')
